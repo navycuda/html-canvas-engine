@@ -135,10 +135,10 @@ export class CanvasGameEngine{
       "arrowup"     : () => { this.camera.y -= 1; },
       "arrowright"  : () => { this.camera.x += 1; },
       "arrowleft"   : () => { this.camera.x -= 1; },
-      "w" : () => { this.camera = this.camera.add(forward); },
-      "s" : () => { this.camera = this.camera.subtract(forward); },
-      "a" : () => { this.yaw -= 1; },
-      "d" : () => { this.yaw += 1; }
+      "w"           : () => { this.camera = this.camera.add(forward); },
+      "s"           : () => { this.camera = this.camera.subtract(forward); },
+      "a"           : () => { this.yaw -= 1; },
+      "d"           : () => { this.yaw += 1; }
     });
 
     this.print(20,38*2,CONSTANTS.COLOURS.FORGROUND,this.keyboard.keysPressed());
@@ -226,8 +226,6 @@ export class CanvasGameEngine{
         // out of the matrix.vector cuntion from the previous videos, so
         // do this manually.
         const offsetView = new Vec3D(1,1,0);
-        const h = (height / 2);
-        const w = (width / 2);
         for (let i = 0 as Vec3D.Index; i < 3; i++){
           // Convert World Space --> View Space
           triViewed.p[i] = triTransformed.p[i].multiplyByMatrix(matView);
@@ -235,8 +233,8 @@ export class CanvasGameEngine{
           triProjected.p[i] = triViewed.p[i].multiplyByMatrix(matProj);
           triProjected.p[i] = triProjected.p[i].divideByScalar(triProjected.p[i].w);
           triProjected.p[i] = triProjected.p[i].add(offsetView);
-          triProjected.p[i].x *= w; 
-          triProjected.p[i].y *= h;
+          triProjected.p[i].x *= centerX; 
+          triProjected.p[i].y *= centerY;
         }
         triProjected.colour = colourFn(lightDotProduct);
 
